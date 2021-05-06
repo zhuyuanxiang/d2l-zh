@@ -185,7 +185,7 @@ Y = d2l.ones((batch_size, num_kvpairs, num_hiddens))
 attention(X, Y, Y, valid_lens).shape
 ```
 
-## 摘要
+## 小结
 
 * 多头注意力通过查询、键和值的不同表示子空间将同一注意力池化的知识结合在一起。
 * 为了并行计算多头注意力的那些头，需要使用恰当的张量操作。
