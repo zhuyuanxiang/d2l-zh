@@ -1,9 +1,9 @@
 # 自注意力和位置编码
 :label:`sec_self-attention-and-positional-encoding`
 
-在深度学习中，我们经常使用 CNN 或 RNN 对序列进行编码。现在尝试基于注意力机制，通过将一个令牌序列输入到注意力池化模块中，以便查询、键和值使用的是同一组令牌。每个查询都会关注所有的“键－值”对，并生成一个注意力输出。由于查询、键和值来自同一个集合，因此执行的
-*自注意力 * :cite:`Lin.Feng.Santos.ea.2017,Vaswani.Shazeer.Parmar.ea.2017`，也称为 * 内部注意力 * :cite:`Cheng.Dong.Lapata.2016,Parikh.Tackstrom.Das.ea.2016,Paulus.Xiong.Socher.2017`。
-在本节中，我们将讨论使用自注意力的序列编码和序列顺序的附加信息。
+在深度学习中，我们经常使用卷积神经网络或循环神经网络对序列进行编码。现在请注意机制。想象一下，我们将一系列标签输入注意力池，以便同一组标签充当查询、键和值。具体来说，每个查询都会关注所有键值对并生成一个注意力输出。由于查询、键和值来自同一个地方，因此执行
+*自注意力*（self-attention） :cite:`Lin.Feng.Santos.ea.2017,Vaswani.Shazeer.Parmar.ea.2017`，也称为 *内注意力*（intra-attention） :cite:`Cheng.Dong.Lapata.2016,Parikh.Tackstrom.Das.ea.2016,Paulus.Xiong.Socher.2017`。
+在本节中，我们将讨论使用自注意力的序列编码，包括使用序列顺序的其他信息。
 
 ```{.python .input}
 from d2l import mxnet as d2l
@@ -23,11 +23,11 @@ from torch import nn
 
 ## 自注意力
 
-给定一个令牌输入序列 $\mathbf{x}_1, \ldots, \mathbf{x}_n$，其中任何 $\mathbf{x}_i \in \mathbb{R}^d$ ($1 \leq i \leq n$)，它的自注意力输出是一个长度相同的序列 $\mathbf{y}_1, \ldots, \mathbf{y}_n$，其中
+给定一系列输入标签 $\mathbf{x}_1, \ldots, \mathbf{x}_n$，其中任何 $\mathbf{x}_i \in \mathbb{R}^d$ ($1 \leq i \leq n$)，它的自注意力输出一个长度相同的序列 $\mathbf{y}_1, \ldots, \mathbf{y}_n$，其中
 
 $$\mathbf{y}_i = f(\mathbf{x}_i, (\mathbf{x}_1, \mathbf{x}_1), \ldots, (\mathbf{x}_n, \mathbf{x}_n)) \in \mathbb{R}^d$$
 
-根据 :eqref:`eq_attn-pooling` 中注意力池化函数 $f$ 的定义。下面的代码片段使用多头注意力计算张量的自注意力，输入张量与输出张量的形状都是（批量大小、时间步长或令牌中的序列长度，令牌维度 $d$）。
+根据 :eqref:`eq_attn-pooling` 中关注集中 $f$ 的定义。使用多头注意力，以下代码片段计算具有形状的张量的自注意力（批量大小、时间步长或标签中的序列长度，$d$）。输出张量的形状相同。
 
 ```{.python .input}
 num_hiddens, num_heads = 100, 5
@@ -181,7 +181,7 @@ $$\begin{aligned}
 
 其中，$2\times 2$ 投影矩阵不依赖于任何位置索引 $i$。
 
-## 摘要
+## 小结
 
 * 在自注意力中，查询、键和值都来自同一个地方。
 * CNN 和自注意力都能得到并行计算的好处，并且自注意力的最大路径长度最短。但是，因为自注意力的计算复杂度为序列长度的二次方，因此在很长的序列中其计算速度非常缓慢。
