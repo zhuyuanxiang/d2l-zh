@@ -14,9 +14,9 @@
 
 编码器，encoder
 
-标记，token
+词元，token
 
-标记化，tokenize
+词元化，tokenize
 
 标签，label
 
@@ -26,19 +26,19 @@
 
 长短期记忆网络，long short-term memory (LSTM)
 
-超参数，hyper-parameter
+超参数，hyperparameter
 
 层序softmax，hierarchical softmax
 
 成本，cost
 
-词汇表，vocabulary
+词表，vocabulary
 
 词嵌入，word embedding
 
 词向量，word vector
 
-池化层，pooling layer
+汇聚层，pooling layer
 
 稠密，dense
 
@@ -46,7 +46,7 @@
 
 导入，import
 
-迭代周期（周期)，epoch
+轮，epoch
 
 迭代模型参数，update model parameter(s)
 
