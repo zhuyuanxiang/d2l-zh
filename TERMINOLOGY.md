@@ -114,6 +114,8 @@
 
 解码器，decoder
 
+近似法，approximate method
+
 精确度，precision
 
 经验风险最小化，empirical risk minimization
@@ -166,7 +168,7 @@
 
 批量，batch
 
-平均池化层，average pooling layer
+平均汇聚层，average pooling layer
 
 齐普夫定律，Zipf's law
 
@@ -220,7 +222,7 @@ softmax回归，softmax regression
 
 跳字模型，skip-gram model
 
-调参，tune hyper-parameter
+调参，tune hyperparameter
 
 停用词，stop words
 
