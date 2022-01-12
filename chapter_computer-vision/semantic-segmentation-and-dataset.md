@@ -1,11 +1,11 @@
 # 语义分割和数据集
 :label:`sec_semantic_segmentation`
 
-在 :numref:`sec_bbox`—:numref:`sec_rcnn` 中讨论的目标检测问题中，我们一直使用方形边界框来标注和预测图像中的目标。
+在 :numref:`sec_bbox`— :numref:`sec_rcnn`中讨论的目标检测问题中，我们一直使用方形边界框来标注和预测图像中的目标。
 本节将探讨*语义分割*（semantic segmentation）问题，它重点关注于如何将图像分割成属于不同语义类别的区域。
 与目标检测不同，语义分割可以识别并理解图像中每一个像素的内容：其语义区域的标注和预测是像素级的。
-:numref:`fig_segmentation` 展示了语义分割中图像有关狗、猫和背景的标签。
-与目标检测相比，语义分割标注的像素级的边框显然更加精细。 
+ :numref:`fig_segmentation`展示了语义分割中图像有关狗、猫和背景的标签。
+与目标检测相比，语义分割标注的像素级的边框显然更加精细。
 
 ![语义分割中图像有关狗、猫和背景的标签](../img/segmentation.svg)
 :label:`fig_segmentation`
@@ -13,14 +13,14 @@
 ## 图像分割和实例分割
 
 计算机视觉领域还有2个与语义分割相似的重要问题，即*图像分割*（image segmentation）和*实例分割*（instance segmentation）。
-我们在这里将它们同语义分割简单区分一下。 
+我们在这里将它们同语义分割简单区分一下。
 
-* *图像分割*将图像划分为若干组成区域，这类问题的方法通常利用图像中像素之间的相关性。它在训练时不需要有关图像像素的标签信息，在预测时也无法保证分割出的区域具有我们希望得到的语义。以 :numref:`fig_segmentation` 中的图像作为输入，图像分割可能会将狗分为两个区域：一个覆盖以黑色为主的嘴和眼睛，另一个覆盖以黄色为主的其余部分身体。
+* *图像分割*将图像划分为若干组成区域，这类问题的方法通常利用图像中像素之间的相关性。它在训练时不需要有关图像像素的标签信息，在预测时也无法保证分割出的区域具有我们希望得到的语义。以 :numref:`fig_segmentation`中的图像作为输入，图像分割可能会将狗分为两个区域：一个覆盖以黑色为主的嘴和眼睛，另一个覆盖以黄色为主的其余部分身体。
 * *实例分割*也叫*同时检测并分割*（simultaneous detection and segmentation），它研究如何识别图像中各个目标实例的像素级区域。与语义分割不同，实例分割不仅需要区分语义，还要区分不同的目标实例。例如，如果图像中有两条狗，则实例分割需要区分像素属于的两条狗中的哪一条。
 
 ## Pascal VOC2012 语义分割数据集
 
-[**最重要的语义分割数据集之一是[Pascal VOC2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/)。**] 
+[**最重要的语义分割数据集之一是[Pascal VOC2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/)。**]
 下面我们深入了解一下这个数据集。
 
 ```{.python .input}
@@ -62,7 +62,7 @@ voc_dir = d2l.download_extract('voc2012', 'VOCdevkit/VOC2012')
 ```{.python .input}
 #@save
 def read_voc_images(voc_dir, is_train=True):
-    """读取所有VOC图像并标注。"""
+    """读取所有VOC图像并标注"""
     txt_fname = os.path.join(voc_dir, 'ImageSets', 'Segmentation',
                              'train.txt' if is_train else 'val.txt')
     with open(txt_fname, 'r') as f:
@@ -82,7 +82,7 @@ train_features, train_labels = read_voc_images(voc_dir, True)
 #@tab pytorch
 #@save
 def read_voc_images(voc_dir, is_train=True):
-    """读取所有VOC图像并标注。"""
+    """读取所有VOC图像并标注"""
     txt_fname = os.path.join(voc_dir, 'ImageSets', 'Segmentation',
                              'train.txt' if is_train else 'val.txt')
     mode = torchvision.io.image.ImageReadMode.RGB
@@ -141,7 +141,7 @@ VOC_CLASSES = ['background', 'aeroplane', 'bicycle', 'bird', 'boat',
 ```{.python .input}
 #@save
 def voc_colormap2label():
-    """构建从RGB到VOC类别索引的映射。"""
+    """构建从RGB到VOC类别索引的映射"""
     colormap2label = np.zeros(256 ** 3)
     for i, colormap in enumerate(VOC_COLORMAP):
         colormap2label[
@@ -150,7 +150,7 @@ def voc_colormap2label():
 
 #@save
 def voc_label_indices(colormap, colormap2label):
-    """将VOC标签中的RGB值映射到它们的类别索引。"""
+    """将VOC标签中的RGB值映射到它们的类别索引"""
     colormap = colormap.astype(np.int32)
     idx = ((colormap[:, :, 0] * 256 + colormap[:, :, 1]) * 256
            + colormap[:, :, 2])
@@ -161,7 +161,7 @@ def voc_label_indices(colormap, colormap2label):
 #@tab pytorch
 #@save
 def voc_colormap2label():
-    """构建从RGB到VOC类别索引的映射。"""
+    """构建从RGB到VOC类别索引的映射"""
     colormap2label = torch.zeros(256 ** 3, dtype=torch.long)
     for i, colormap in enumerate(VOC_COLORMAP):
         colormap2label[
@@ -170,7 +170,7 @@ def voc_colormap2label():
 
 #@save
 def voc_label_indices(colormap, colormap2label):
-    """将VOC标签中的RGB值映射到它们的类别索引。"""
+    """将VOC标签中的RGB值映射到它们的类别索引"""
     colormap = colormap.permute(1, 2, 0).numpy().astype('int32')
     idx = ((colormap[:, :, 0] * 256 + colormap[:, :, 1]) * 256
            + colormap[:, :, 2])
@@ -187,16 +187,16 @@ y[105:115, 130:140], VOC_CLASSES[1]
 
 ### 预处理数据
 
-在之前的实验，例如 :numref:`sec_alexnet`—:numref:`sec_googlenet` 中，我们通过缩放图像使其符合模型的输入形状。
+在之前的实验，例如 :numref:`sec_alexnet`— :numref:`sec_googlenet`中，我们通过再缩放图像使其符合模型的输入形状。
 然而在语义分割中，这样做需要将预测的像素类别重新映射回原始尺寸的输入图像。
 这样的映射可能不够精确，尤其在不同语义的分割区域。
-为了避免这个问题，我们将图像裁剪为固定尺寸，而不是缩放。
+为了避免这个问题，我们将图像裁剪为固定尺寸，而不是再缩放。
 具体来说，我们[**使用图像增广中的随机裁剪，裁剪输入图像和标签的相同区域**]。
 
 ```{.python .input}
 #@save
 def voc_rand_crop(feature, label, height, width):
-    """随机裁剪特征和标签图像。"""
+    """随机裁剪特征和标签图像"""
     feature, rect = image.random_crop(feature, (width, height))
     label = image.fixed_crop(label, *rect)
     return feature, label
@@ -206,7 +206,7 @@ def voc_rand_crop(feature, label, height, width):
 #@tab pytorch
 #@save
 def voc_rand_crop(feature, label, height, width):
-    """随机裁剪特征和标签图像。"""
+    """随机裁剪特征和标签图像"""
     rect = torchvision.transforms.RandomCrop.get_params(
         feature, (height, width))
     feature = torchvision.transforms.functional.crop(feature, *rect)
@@ -241,7 +241,7 @@ d2l.show_images(imgs[::2] + imgs[1::2], 2, n);
 ```{.python .input}
 #@save
 class VOCSegDataset(gluon.data.Dataset):
-    """一个用于加载VOC数据集的自定义数据集。"""
+    """一个用于加载VOC数据集的自定义数据集"""
     def __init__(self, is_train, crop_size, voc_dir):
         self.rgb_mean = np.array([0.485, 0.456, 0.406])
         self.rgb_std = np.array([0.229, 0.224, 0.225])
@@ -275,7 +275,7 @@ class VOCSegDataset(gluon.data.Dataset):
 #@tab pytorch
 #@save
 class VOCSegDataset(torch.utils.data.Dataset):
-    """一个用于加载VOC数据集的自定义数据集。"""
+    """一个用于加载VOC数据集的自定义数据集"""
 
     def __init__(self, is_train, crop_size, voc_dir):
         self.transform = torchvision.transforms.Normalize(
@@ -289,7 +289,7 @@ class VOCSegDataset(torch.utils.data.Dataset):
         print('read ' + str(len(self.features)) + ' examples')
 
     def normalize_image(self, img):
-        return self.transform(img.float())
+        return self.transform(img.float() / 255)
 
     def filter(self, imgs):
         return [img for img in imgs if (
@@ -352,7 +352,7 @@ for X, Y in train_iter:
 ```{.python .input}
 #@save
 def load_data_voc(batch_size, crop_size):
-    """加载VOC语义分割数据集。"""
+    """加载VOC语义分割数据集"""
     voc_dir = d2l.download_extract('voc2012', os.path.join(
         'VOCdevkit', 'VOC2012'))
     num_workers = d2l.get_dataloader_workers()
@@ -369,7 +369,7 @@ def load_data_voc(batch_size, crop_size):
 #@tab pytorch
 #@save
 def load_data_voc(batch_size, crop_size):
-    """加载VOC语义分割数据集。"""
+    """加载VOC语义分割数据集"""
     voc_dir = d2l.download_extract('voc2012', os.path.join(
         'VOCdevkit', 'VOC2012'))
     num_workers = d2l.get_dataloader_workers()
@@ -390,8 +390,8 @@ def load_data_voc(batch_size, crop_size):
 
 ## 练习
 
-1. 如何在自动驾驶车辆和医疗图像诊断中应用语义分割？还能想到其他领域的应用吗？ 
-1. 回想一下 :numref:`sec_image_augmentation` 中对数据增强的描述。图像分类中使用的哪种图像增强方法是难以用于语义分割的？
+1. 如何在自动驾驶和医疗图像诊断中应用语义分割？还能想到其他领域的应用吗？
+1. 回想一下 :numref:`sec_image_augmentation`中对数据增强的描述。图像分类中使用的哪种图像增强方法是难以用于语义分割的？
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/3296)
